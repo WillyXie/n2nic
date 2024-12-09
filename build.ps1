@@ -1,1 +1,0 @@
-docker build -t n2nic .\ext\docker-ubuntu

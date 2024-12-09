@@ -1,6 +1,3 @@
-[submodule "ext/docker-ubuntu"]
-	path = ext/docker-ubuntu
-	url = git@github.com:WillyXie/docker-ubuntu.git
 [submodule "ext/iverilog"]
 	path = ext/iverilog
 	url = https://github.com/steveicarus/iverilog.git
