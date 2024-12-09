@@ -1,0 +1,1 @@
+docker run -v ${PSScriptRoot}:/work -p 3389:3389 --name basic -td n2nic /bin/bash
