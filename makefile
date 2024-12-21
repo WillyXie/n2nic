@@ -6,29 +6,45 @@ endif
 ECHO 	:= @echo
 PROC 	?= 8
 
-# Icarus
-VSRC := $(ROOT)/ext/iverilog
-VPTH := $(ROOT)/tools/iverilog
-VCOM := $(VPTH)/bin/iverilog
-VSIM := $(VPTH)/bin/vvp
+# GTKWave
+GTKSRC := $(ROOT)/ext/gtkwave/gtkwave3-gtk3
+GTKBLD := $(ROOT)/build/gtkwave3
+GTKPTH := $(ROOT)/tools/gtkwave3
+GTKWAV := $(GTKPTH)/bin/gtkwave
+
+# Icarus Verilog
+ICVSRC := $(ROOT)/ext/iverilog
+ICVBLD := $(ROOT)/build/iverilog
+ICVPTH := $(ROOT)/tools/iverilog
+ICVCOM := $(ICVPTH)/bin/iverilog
+ICVSIM := $(ICVPTH)/bin/vvp
 
 # Simulate target
+SRC	?= $(ROOT)/src/hello.sv
 TARG	?= $(ROOT)/hello
+WAVE	:= $(TARG).vcd
 
-hello: $(VSIM) $(TARG)
-	$(VSIM) $(TARG)
+test: $(GTKWAV) $(WAVE)
+	$(GTKWAV) $(WAVE) &
 
-$(TARG): $(VCOM)
-	$(VCOM) -o $@ $(ROOT)/src/hello.sv
+$(WAVE): $(ICVSIM) $(TARG)
+	$(ICVSIM) $(TARG)
 
-$(VPTH)/%: | $(BUILD)
-	@mkdir -p $(VPTH); cd $(VSRC); sh autoconf.sh;\
-		cd $(BUILD); $(VSRC)/configure --prefix=$(VPTH);\
-		make -j$(PROC); make install; rm -rf $(BUILD)/*
+$(TARG): $(ICVCOM)
+	$(ICVCOM) -o $@ $(SRC)
 
-$(BUILD):
-	$(ECHO) Create directory $@
-	@mkdir -p $@
+$(WPTH)/%:
+	@mkdir -p $(GTKPTH); cd $(GTKSRC); ./autogen.sh;\
+		mkdir -p $(GTKBLD); cd $(GTKBLD);\
+		$(GTKSRC)/configure --enable-gtk3 --prefix=$(GTKPTH) \
+		--with-tcl=/usr/lib/tcl8.6 --with-tk=/usr/lib/tk8.6;\
+		make -j$(PROC); sudo make install
+
+$(ICVPTH)/%:
+	@mkdir -p $(ICVPTH); cd $(ICVSRC); sh autoconf.sh;\
+		mkdir -p $(ICVBLD); cd $(ICVBLD);\
+		$(ICVSRC)/configure --prefix=$(ICVPTH);\
+		make -j$(PROC); make install
 
 clean:
-	rm -rf $(BUILD)/* $(TARG)
+	rm -rf build*/ $(TARG) $(WAVE)
