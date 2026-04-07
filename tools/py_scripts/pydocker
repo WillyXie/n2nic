@@ -1,0 +1,82 @@
+#!/usr/bin/env python3
+
+"""
+
+"""
+
+import argparse
+import os
+
+from commander import *
+
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description='Argument parser for pydoc.')
+
+    parser.add_argument(
+        'action',
+        help='Docker command action: build/start')
+
+    parser.add_argument(
+        '-v', '--verbose',
+        action='store_true',
+        help='Enable verbose output.')
+
+    args, unknown = parser.parse_known_args()
+    return args
+
+def main():
+
+    # Start up message
+    print("pydocker")
+
+    # Argument parsing
+    args = parse_args()
+
+    # Check path setup before running commands
+    root: str = os.environ['PRJROOT']
+    if(root):
+        print(f"$PRJROOT is set to : {root}")
+    else:
+        print("$PRJROOT is not set, please run 'source source.sh first'")
+
+    ## Run build if not skipped
+    cmd_get_date: str = "date +%Y%m%d_%H:%M:%S"
+    cmder = commander()
+    cmder.set_cmd(cmd_get_date)
+    ret = cmder.run()
+    if ret:
+        print(cmder.get_error())
+        return ret
+    else:
+        date = cmder.get_output().strip()
+        print(f"Build docker with time : {date}")
+
+    dir_dockerfile:str = f"{root}/ext/docker-ubuntu"
+    cmd_docker_build: str = f"sudo docker build --build-arg BUILD_VER={date} -t ubuntu-n2nic {dir_dockerfile}"
+    print(cmd_docker_build)
+    cmder.__init__()
+    cmder.set_cmd(cmd_docker_build)
+    ret = cmder.run()
+    if ret:
+        print(cmder.get_error())
+        return ret
+    else:
+        print(cmder.get_output())
+
+    ## Run test
+    #binary = "bazel-bin/"+args.target[2:].replace(':', '/', 1)
+    #cmder.__init__()
+    #cmder.set_cmd(binary)
+    #ret = cmder.run()
+    #if ret:
+    #    print(cmder.get_error())
+    #    return ret
+    #else:
+    #    print(cmder.get_output())
+
+    return 0
+
+if __name__=="__main__":
+    main()
+

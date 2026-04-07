@@ -3,10 +3,6 @@ n2nic
 
 End to end IC developement.
 
-## Bring Up Docker Environment
-This project is developed and tested under docker environment maintained in [docker-ubuntu/n2nic](https://github.com/WillyXie/docker-ubuntu/tree/n2nic). <br />
-You can find the guide and follow it to bring up the environment or build it by your own.
-
 ## Pull Project & Setup Environment
 - Download Project
   ```shell=
@@ -21,3 +17,30 @@ You can find the guide and follow it to bring up the environment or build it by 
   $ source source.sh
   ```
 
+
+## Build Docker Environment
+```
+$ docker_build.sh
+$ docker_start.sh
+$ docker_connect.sh
+```
+
+Stop and remove docker container
+```
+$ sudo docker container stop n2nic
+$ sudo docker container remove n2nic
+```
+
+## Build & Run Verilator
+```
+$ bazel build //sim:my_test
+$ ./bazel-bin/sim/my_test --trace-params
+```
+
+## Open Waveform
+```
+$ gtkwave tb_top.vcd misc/signal.gtkw
+```
+```
+
+```

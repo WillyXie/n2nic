@@ -1,12 +1,12 @@
+`timescale 1ns/100ps
+`define CLK 10
+
 module HELLO (
   input wire clk,
   output wire out
 );
   assign out = ~clk;
 endmodule
-
-`timescale 1ns/100ps
-`define CLK 10
 
 module tb;
   logic clk;

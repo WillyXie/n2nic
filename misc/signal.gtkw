@@ -1,0 +1,27 @@
+[*]
+[*] GTKWave Analyzer v3.3.116 (w)1999-2023 BSI
+[*] Tue Apr  7 16:28:48 2026
+[*]
+[dumpfile] "/home/willyxie/work/n2nic/tb_top.vcd"
+[dumpfile_mtime] "Tue Apr  7 16:08:25 2026"
+[dumpfile_size] 36977
+[savefile] "/home/willyxie/work/n2nic/signal.gtkw"
+[timestart] 0
+[size] 3840 2113
+[pos] -27 -24
+*-3.542038 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] TOP.
+[treeopen] TOP.CPU.
+[sst_width] 278
+[signals_width] 102
+[sst_expanded] 1
+[sst_vpaned_height] 683
+@28
+TOP.CPU.if_stage.clk
+TOP.CPU.if_stage.rst
+@22
+TOP.CPU.if_stage.pc[31:0]
+@23
+TOP.CPU.if_stage.npc[31:0]
+[pattern_trace] 1
+[pattern_trace] 0
