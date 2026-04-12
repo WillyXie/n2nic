@@ -28,7 +28,8 @@ sh_binary(
     ],
     args = [
       "-e $(location //tests/simple:elf)"
-    ]
+    ],
+    visibility = ["//visibility:public"],
 )
 
 #run_binary(

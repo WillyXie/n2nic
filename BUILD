@@ -4,7 +4,7 @@ build_test(
     name = "smoke",
     targets = [
         "//sim/demo/hello:tb_hello",
-        "//sim/simple:tb_top",
+        "//sim/tb_core:sh_tb",
     ],
 )
 
