@@ -31,16 +31,21 @@ $ sudo docker container stop n2nic
 $ sudo docker container remove n2nic
 ```
 
-## Build & Run Verilator
+## Run simple Smoke tests
 ```
-$ bazel build //sim:my_test
-$ ./bazel-bin/sim/my_test --trace-params
+$ bazel run //:smoke
+```
+
+```
+```
+## Build & Run Verilator Demo
+```
+$ bazel run //tests/demo/hello:tb_hello
+$ ./bazel-bin/tests/demo/tb_hello --trace-params
 ```
 
 ## Open Waveform
 ```
 $ gtkwave tb_top.vcd misc/signal.gtkw
 ```
-```
 
-```

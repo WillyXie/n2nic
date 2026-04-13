@@ -4,6 +4,7 @@ module CPU(
   input  logic          clk,
   input  logic          rst,
   input  logic          ext_interrupt,
+
   // Instr Mem
   input  logic  [31:0]  im_data,
   input  logic          im_wait,
