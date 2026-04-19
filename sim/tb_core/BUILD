@@ -9,6 +9,7 @@ cc_binary(
         "@googletest//:gtest_main",
         "//sim/share/arg_parser:arg_parser",
         "//sim/share/elf_loader:elf_loader",
+        "//sim/share/vip/sram:sram_c",
         "//src/cpu/core:core_vlib",
     ],
     copts = [
@@ -21,7 +22,7 @@ sh_binary(
     name = "sh_tb",
     srcs = [":tb_core"],
     data = [
-        #":tb_top",
+        ":tb_core",
         "//tests/simple:elf",
         "//tests/simple:dis", # To generate disassemble
     ],

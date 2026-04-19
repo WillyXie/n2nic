@@ -42,6 +42,7 @@ $ bazel run //:smoke
 ```
 $ bazel run //tests/demo/hello:tb_hello
 $ ./bazel-bin/tests/demo/tb_hello --trace-params
+$ bazel run //sim/tb_core:sh_tb -- -d1
 ```
 
 ## Open Waveform
