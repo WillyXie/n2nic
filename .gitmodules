@@ -5,3 +5,10 @@
 [submodule "ext/gtkwave"]
 	path = ext/gtkwave
 	url = https://github.com/gtkwave/gtkwave
+[submodule "ext/docker-ubuntu"]
+	path = ext/docker-ubuntu
+	url = git@github.com:WillyXie/docker-ubuntu.git
+	branch = n2nic
+[submodule "ext/bazel-orfs"]
+	path = ext/bazel-orfs
+	url = https://github.com/The-OpenROAD-Project/bazel-orfs.git
