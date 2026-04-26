@@ -10,7 +10,8 @@ cc_binary(
 platform_transition_filegroup(
     name = "elf",
     srcs = [":baremetal"],
-    target_platform = "//tests/baremetal/platforms:riscv32_imac",
+    #target_platform = "//tests/baremetal/platforms:riscv32_imac",
+    target_platform = "//tests/baremetal/platforms:riscv32_i",
     visibility = ["//visibility:public"],
 )
 

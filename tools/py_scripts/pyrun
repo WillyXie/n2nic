@@ -1,60 +1,91 @@
 #!/usr/bin/env python3
 
 """
-
+Unified command wrapper to integrate and run different flows for the project.
 """
 
 import argparse
 
 from commander import *
+from testloader import *
+
+cmder = commander()
+tlder = testloader()
 
 def parse_args():
-  parser = argparse.ArgumentParser(
-    description='Argument parser for pyrun.')
+    parser = argparse.ArgumentParser(
+        description='Argument parser for pyrun.')
 
-  parser.add_argument(
-    'target',
-    help='Build & run target.')
+    parser.add_argument(
+        '--directory',
+        required = True,
+        help='Path to run target and put output.')
 
-  parser.add_argument(
-    '-v', '--verbose',
-    action='store_true',
-    help='Enable verbose output.')
+    parser.add_argument(
+        '--testsuite',
+        required = True,
+        help='Path to the testsuite file specifying details of tests to run.')
 
-  args = parser.parse_args()
-  return args
+    parser.add_argument(
+        '--testname',
+        required = True,
+        help='Build & run target.')
+
+    parser.add_argument(
+        '-v', '--verbose',
+        action='store_true',
+        help='Enable verbose output.')
+
+    args = parser.parse_args()
+    return args
 
 def main():
-  # Start up message
-  print("pyrun")
+    print("pyrun")
 
-  # Argument parsing
-  args = parse_args()
-  print(args)
+    # Argument parsing
+    args = parse_args()
+    print(args)
 
-  # Run build if not skipped
-  cmder = commander()
-  cmder.set_cmd(f"bazel build {args.target}")
-  ret = cmder.run()
-  if ret:
-    print(cmder.get_error())
-    return ret
-  else:
-    print(cmder.get_output())
+    # Parsing tests from testsutie
+    tlder.load_suite(args.testsuite)
+    tlder.print_tests()
+    tests = tlder.get_tests(args.testname)
+    #print(tests)
+    if len(tests)==0:
+        print(f"Test [{args.testname}] doesn't exist in testsuite [{args.testsuite}] provided")
+        return -1
+    # Run the test been specified
+    elif len(tests)==1:
+        test = tests[0]
+        # Run build if not skipped
+        #cmder = commander()
+        #cmder.set_cmd(f"bazel build {args.target}")
+        #ret = cmder.run()
 
-  # Run test
-  binary = "bazel-bin/"+args.target[2:].replace(':', '/', 1)
-  cmder.__init__()
-  cmder.set_cmd(binary)
-  ret = cmder.run()
-  if ret:
-    print(cmder.get_error())
-    return ret
-  else:
-    print(cmder.get_output())
+        # Make test directory
+        p_abs = os.path.abspath(args.directory)
+        print(f"Run path is set to : {args.directory}")
+        print(f"Absolute run path : {p_abs}")
+        cmder.__init__()
+        cmder.set_cmd(f"mkdir -p {args.directory}")
+        ret = cmder.run()
 
-  return 0
+        # Run target
+        sim_args = " ".join(test.get("args", []))
+        cmder.__init__()
+        cmd = f"bazel-8.6.0 run {test["target"]} -- {sim_args}"
+        cmder.set_env("BAZEL_RUN_DIRECTORY", p_abs)
+        cmder.set_cmd(cmd)
+        ret = cmder.run()
+
+        return 0
+    # Multiple tests are found
+    else:
+        print("Random test pick is not supported yet")
+        return -1
+
+    return -1
 
 if __name__=="__main__":
-  main()
+    main()
 

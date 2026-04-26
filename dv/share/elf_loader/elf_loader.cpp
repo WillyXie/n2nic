@@ -81,7 +81,7 @@ void ELFLoader::print_info() {
     //std::cout << "Flags: 0x" << std::hex << flags << std::endl;
     std::cout << "Addr: 0x" << std::hex << data.addr << std::endl;
     std::cout << "Size: 0x" << std::hex << data.size << std::endl;
-    //for (size_t i = 0; i < data.size; i++) {
+    //for (size_t i = 0; i*4 < data.size; i++) {
     //  std::cout << "0x" << std::hex << data.data[i] << std::endl;
     //}
   }

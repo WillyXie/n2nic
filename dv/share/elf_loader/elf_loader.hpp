@@ -7,6 +7,7 @@
 #include <elf.h>
 
 #ifndef __ELF_LOADER__
+#define __ELF_LOADER__
 
 typedef struct {
   uint32_t addr;

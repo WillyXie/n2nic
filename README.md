@@ -16,20 +16,12 @@ End to end IC developement.
   ```shell=
   $ source source.sh
   ```
-
-
-## Build Docker Environment
-```
-$ docker_build.sh
-$ docker_start.sh
-$ docker_connect.sh
-```
-
-Stop and remove docker container
-```
-$ sudo docker container stop n2nic
-$ sudo docker container remove n2nic
-```
+- Setup Python virtual environment
+  ```shell=
+  $ python3 -m venv .venv
+  $ source .venv/bin/activate
+  $ python3 -m pip install ./requirements.txt
+  ```
 
 ## Run simple Smoke tests
 ```
@@ -40,13 +32,25 @@ $ bazel run //:smoke
 ```
 ## Build & Run Verilator Demo
 ```
-$ bazel run //tests/demo/hello:tb_hello
-$ ./bazel-bin/tests/demo/tb_hello --trace-params
-$ bazel run //sim/tb_core:sh_tb -- -d1
+$ pyrun --directory=$PRJROOT/test --testsuite=$PRJROOT/testsuites/basic.yaml --testname=tb_hello
+$ pyrun --directory=$PRJROOT/test --testsuite=$PRJROOT/testsuites/basic.yaml --testname=tb_core
 ```
 
 ## Open Waveform
 ```
 $ gtkwave tb_top.vcd misc/signal.gtkw
+```
+
+## Build Docker Environment
+```
+$ docker_build.sh
+$ docker_start.sh
+$ docker_connect.sh
+```
+
+- Stop and remove docker container
+```
+$ sudo docker container stop n2nic
+$ sudo docker container remove n2nic
 ```
 

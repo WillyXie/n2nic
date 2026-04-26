@@ -10,7 +10,8 @@ cc_library(
     target_compatible_with = [
         "@platforms//cpu:riscv32",
         "@platforms//os:none",
-        "//tests/baremetal/constraints/march:imac",
+        #"//tests/baremetal/constraints/march:imac",
+        "//tests/baremetal/constraints/march:i",
     ],
     visibility = ["//visibility:public"],
     deps = [":linker.ld"],

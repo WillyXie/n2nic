@@ -6,6 +6,7 @@
 #include "CLI/CLI.hpp"
 
 #ifndef __ARG_PARSER__
+#define __ARG_PARSER__
 
 // Argument Parsing
 struct args_s {

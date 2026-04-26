@@ -1,0 +1,18 @@
+#_templates:
+#  base_args: &base_args
+#    - "--timeout=5000"
+#    - "--vcd_path=logs/"
+
+#includes:
+#  - "additional_tests.yaml" # For recursive loading
+
+regressions:
+  - name: "tb_hello"
+    target: "//dv/demo/hello:tb_hello"
+  - name: "tb_core"
+    target: "//dv/sim_core:sh_tb"
+    args:
+      - "-d1"
+  - name: "smoke"
+    target: "//:smoke"
+
